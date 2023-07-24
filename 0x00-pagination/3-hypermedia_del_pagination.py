@@ -50,6 +50,7 @@ class Server:
         page_size: the current page size
         data: the actual page of the dataset
         """
+        
         assert type(index) is int and index >= 0
         assert type(page_size) is int and page_size > 0
 
