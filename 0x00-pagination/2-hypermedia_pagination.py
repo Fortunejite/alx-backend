@@ -8,7 +8,6 @@ import math
 from typing import List, Dict
 
 
-
 class Server:
     """Server class to paginate a database of popular baby names.
     """
@@ -29,13 +28,13 @@ class Server:
         return self.__dataset
 
     def index_range(self, page: int, page_size: int) -> tuple:
-      """Return a tuple of size two containing a start index and an end index
-      corresponding to the range of indexes to return in a list for those
-      particular pagination parameters."""
+        """Return a tuple of size two containing a start index and an end index
+        corresponding to the range of indexes to return in a list for those
+        particular pagination parameters."""
 
-      start = (page - 1) * page_size
-      end = page * page_size
-      return (start, end)
+        start = (page - 1) * page_size
+        end = page * page_size
+        return (start, end)
 
     def get_page(self, page: int = 1, page_size: int = 10) -> List[List]:
         """Return the appropriate page of the dataset (i.e. the correct
@@ -47,7 +46,7 @@ class Server:
 
         range = self.index_range(page, page_size)
         return self.dataset()[range[0]:range[1]]
-    
+
     def get_hyper(self, page: int = 1, page_size: int = 10) -> Dict:
         """Return a dictionary containing the following key-value pairs:
         - page_size: the length of the returned dataset page
@@ -57,9 +56,9 @@ class Server:
         - prev_page: number of the previous page, None if no previous page
         - total_pages: the total number of pages in the dataset as an integer
         """
-        
+
         total_pages = math.ceil(len(self.dataset()) / page_size)
-        
+
         return {
             'page_size': page_size,
             'page': page,

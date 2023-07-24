@@ -8,7 +8,6 @@ import math
 from typing import List
 
 
-
 class Server:
     """Server class to paginate a database of popular baby names.
     """
@@ -29,13 +28,13 @@ class Server:
         return self.__dataset
 
     def index_range(self, page: int, page_size: int) -> tuple:
-      """Return a tuple of size two containing a start index and an end index
-      corresponding to the range of indexes to return in a list for those
-      particular pagination parameters."""
+        """Return a tuple of size two containing a start index and an end index
+        corresponding to the range of indexes to return in a list for those
+        particular pagination parameters."""
 
-      start = (page - 1) * page_size
-      end = page * page_size
-      return (start, end)
+        start = (page - 1) * page_size
+        end = page * page_size
+        return (start, end)
 
     def get_page(self, page: int = 1, page_size: int = 10) -> List[List]:
         """Return the appropriate page of the dataset (i.e. the correct
