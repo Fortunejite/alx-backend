@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-"""LIFOCache module"""
+"""LRUCache module"""
 from base_caching import BaseCaching
 
 
-class LIFOCache(BaseCaching):
-    """ LIFOCache defines:
+class LRUCache(BaseCaching):
+    """ LRUCache defines:
       - Inherits from BaseCaching
       - Caching system
     """
@@ -30,5 +30,6 @@ class LIFOCache(BaseCaching):
         """ Get an item by key
         """
         if key is not None and key in self.cache_data:
+            self.last = key
             return self.cache_data[key]
         return None
