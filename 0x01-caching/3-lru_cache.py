@@ -40,7 +40,7 @@ class LRUCache(BaseCaching):
             self.cache_data[key][0] += 1
             return self.cache_data[key][1]
         return None
-    
+
     def print_cache(self):
         """ Print the cache
         """
