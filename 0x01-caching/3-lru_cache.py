@@ -13,37 +13,28 @@ class LRUCache(BaseCaching):
         """ Initiliaze
         """
         super().__init__()
-        self.least_recently_used = ''
-
-    def get_least_recently_used(self):
-        least = next(iter(self.cache_data))
-        for key in self.cache_data:
-            if self.cache_data[key][0] > self.cache_data[least][0]:
-                least = key
-        return least
 
     def put(self, key, item):
         """ Add an item in the cache using LRU
         """
-        if key is not None and item is not None:
-            if len(self.cache_data) >= BaseCaching.MAX_ITEMS:
-                if key not in self.cache_data:
-                    least = self.get_least_recently_used()
-                    print("DISCARD: {}".format(least))
-                    del self.cache_data[least]
-            self.cache_data[key] = [1, item]
+        if key is None or item is None:
+            return
+
+        # Check if the cache is full
+        if len(self.cache_data) >= self.MAX_ITEMS:
+            lru_key = next(iter(self.cache_data))
+            del self.cache_data[lru_key]
+            print(f"DISCARD: {lru_key}")
+
+        # Add the new item to the cache_data
+        self.cache_data[key] = item
 
     def get(self, key):
         """ Get an item by key
         """
-        if key is not None and key in self.cache_data:
-            self.cache_data[key][0] += 1
-            return self.cache_data[key][1]
-        return None
+        if key is None or key not in self.cache_data:
+            return None
+        item = self.cache_data.pop(key)
+        self.cache_data[key] = item
 
-    def print_cache(self):
-        """ Print the cache
-        """
-        print("Current cache:")
-        for key in sorted(self.cache_data.keys()):
-            print("{}: {}".format(key, self.cache_data.get(key)[1]))
+        return item
