@@ -2,14 +2,9 @@
 """
 A Basic flask application
 """
-from typing import (
-    Dict, Union
-)
-
-from flask import Flask
-from flask import g, request
-from flask import render_template
+from flask import Flask, render_template, request, g
 from flask_babel import Babel
+from typing import Union, Dict
 
 
 class Config(object):
@@ -27,19 +22,6 @@ app.config.from_object(Config)
 
 # Wrap the application with Babel
 babel = Babel(app)
-
-
-@babel.localeselector
-def get_locale() -> str:
-    """
-    Gets locale from request object
-    """
-    locale = request.args.get('locale', '').strip()
-    if locale and locale in Config.LANGUAGES:
-        return locale
-    return request.accept_languages.best_match(app.config['LANGUAGES'])
-
-
 users = {
     1: {"name": "Balou", "locale": "fr", "timezone": "Europe/Paris"},
     2: {"name": "Beyonce", "locale": "en", "timezone": "US/Central"},
@@ -59,6 +41,17 @@ def get_user(id) -> Union[Dict[str, Union[str, None]], None]:
     return users.get(int(id), 0)
 
 
+@babel.localeselector
+def get_locale() -> str:
+    """
+    Get locale from request
+    """
+    locale = request.args.get('locale', '').strip()
+    if locale and locale in Config.LANGUAGES:
+        return locale
+    return request.accept_languages.best_match(app.config['LANGUAGES'])
+
+
 @app.before_request
 def before_request():
     """
@@ -72,7 +65,7 @@ def index() -> str:
     """
     Renders a basic html template
     """
-    return render_template('5-index.html')
+    return render_template('5-index.html', user=g.user)
 
 
 if __name__ == '__main__':
