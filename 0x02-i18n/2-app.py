@@ -24,6 +24,7 @@ app.config.from_object(Config)
 # Wrap the application with Babel
 babel = Babel(app)
 
+
 @babel.localeselector
 def get_locale() -> str:
     """
